@@ -23,9 +23,7 @@ export interface ISearch {
   styleUrls: ["./test-score.component.css"]
 })
 export class TestScoreComponent implements OnInit {
-  search: ISearch = {
-    name: null
-  };
+  name: string;
   tests: Array<ITest> = [];
   constructor(
     private http: Http,
@@ -81,10 +79,13 @@ export class TestScoreComponent implements OnInit {
     });
   }
 
-  validate(search: ISearch) {
-    console.log("inside validate", search)
-    if (search.name === null || search.name === "") {
+  validate(name: String) {
+    console.log("inside validate", name)
+    if (name === null || name === "") {
       this.toastService.showToast("warning", 2000, "Name must not be null");
+    }
+    if (name.indexOf(',') === -1 && name.indexOf(' ') === -1) {
+      this.toastService.showToast('warning', 2000, "There must be a comma and a space within the search");
     }
   }
 
